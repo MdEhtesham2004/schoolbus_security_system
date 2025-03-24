@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from backend.models import Student
+from backend.models import Student,TravelStatus
 
 # sys.path.append("F:/School_Bus_Safety_System")
 
@@ -31,7 +31,30 @@ def take_input(flag):
 
 def take_attendence(request):
     status, current_datetime, student_status, varified=start_capturing()
+    student_id = request.session.get('student_id')  # Assuming student_id is stored in the session during login
+    try:
+        # Fetch the student object using the roll number
+        student = Student.objects.get(rollno=student_id)
+
+        # # Create a new TravelStatus record
+        # travel_status = TravelStatus.objects.create(
+        #     student=student,
+        #   # Reference the rollno field
+        #     datetime=current_datetime,
+        #     status=status,
+        #     varified=varified
+        # )
+
+      
+
+    except Student.DoesNotExist:
+        # Handle the case where the student does not exist
+        print("Student does not exist.")
+        return "Student not found", None, None, None
+
+    # Return the attendance details
     return status, current_datetime, student_status, varified
+    
 
 
 def mylocation_view(request):
@@ -50,10 +73,19 @@ def register_student(request):
 def show_admin_previlages(request,status=None):
     return render(request, 'admin.html')
 
+STATUS = None
+CURRENT_DATETIME = None
+STUDENT_STATUS = None
+VARIFIED = None
 
 def index(request):
     if request.method == 'POST':
         status, current_datetime, student_status, varified = take_attendence(request)
+        global CURRENT_DATETIME,STATUS,STUDENT_STATUS,VARIFIED
+        STATUS = status
+        CURRENT_DATETIME = current_datetime
+        STUDENT_STATUS = student_status
+        VARIFIED = varified
         return render(request, 'index.html',
                       {'status':status, 'current_datetime':current_datetime, 
                        'student_status':student_status, 
@@ -72,6 +104,7 @@ def show_parents_view(request):
     student_id = request.session.get('student_id')  # Assuming student_id is stored in the session during login
     try:
         student = Student.objects.get(rollno=int(student_id))
+      
           # Fetch the student details from the database
         print("Student name:", student.name)
         print("Student name:", student.rollno)
@@ -79,7 +112,9 @@ def show_parents_view(request):
         student = None  # Handle the case where the student does not exist
 
     # Pass the student details to the template
-    return render(request, 'parents_view.html', {'student': student})
+    display_status = {'status':STATUS, 'current_datetime':CURRENT_DATETIME, 'student_status':STUDENT_STATUS, 'varified':VARIFIED}
+    return render(request, 'parents_view.html', {'student': student, 'display_status':display_status})
+    # return render(request, 'parents_view.html', {'student': student})
 
 def logout(request):
     logout(request)

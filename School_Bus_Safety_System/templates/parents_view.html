@@ -95,12 +95,18 @@
         <!-- Right Container -->
         <div class="right-container">
             <h2>Travel Status</h2>
-            <p><strong>Bus Location:</strong> Near Main Street</p>
-            <p><strong>Estimated Time to Destination:</strong> 15 minutes</p>
-            <p><strong>Current Speed:</strong> 40 km/h</p>
+            {% if display_status %}
+                <p><strong>Status:</strong> {{ display_status.status }}</p>
+                <p><strong>Current Date & Time:</strong> {{ display_status.current_datetime }}</p>
+                <p><strong>Student Status:</strong> {{ display_status.student_status }}</p>
+                <p><strong>Verified:</strong> {{ display_status.varified|yesno:"Yes,No" }}</p>
+            {% else %}
+                <p>No travel status available.</p>
+            {% endif %}
         </div>
     </div>
 
+    
     <!-- Bottom Container -->
     <div class="bottom-container">
         <h2>Additional Information</h2>
