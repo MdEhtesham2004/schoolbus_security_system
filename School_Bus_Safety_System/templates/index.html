@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Security System</title>
+    <style>
+      
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+         /* Adds space between header and container */
+        }
+    
+        h1 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+    
+        form {
+            margin-bottom: 20px;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #555555;
+        }
+    
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    
+        button {
+            background-color: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    
+        button:hover {
+            background-color: #2b6cb0;
+        }
+    
+        p {
+            font-size: 14px;
+            color: #333333;
+            margin: 5px 0;
+        }
+    
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>School Security System</h1>
+        <form action="{% url 'index' %}" method="post">
+            {% csrf_token %}
+            <label for="flag">C to capture and  and login Your Attendence</label>
+            <button id="submit" type="submit">TakeAttendence</button>
+        </form>
+        <div class="status">
+            <p>Status: {{ status }}</p>
+            <p>Current Date and Time: {{ current_datetime }}</p>
+            <p>Student Status: {{ student_status }}</p>
+            <p>Verified: {{ varified }}</p>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

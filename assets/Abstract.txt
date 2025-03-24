@@ -1,0 +1,4 @@
+School Bus safety system 
+Using face recognition , gps tracking and sms notification.  When student enters the bus it recognizes and logs into database and send sms or whatsapp notification to the parents . Eg:"Your child {name} has entered/exited the bus at {time }{location}". And also send alert message/email to admin when unknown person tries to enter. 
+Admin should have access to register student, attendance monitoring, bus route and alerts 
+Parrnts should receive notifications and have access to bus route.

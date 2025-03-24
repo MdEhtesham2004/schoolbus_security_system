@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .left-container, .right-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 48%;
+        }
+
+        .left-container h2, .right-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        input[type="text"], input[type="number"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #2b6cb0;
+        }
+        </style>
+</head>
+<body>
+    <h1> {{ status }}</h1>
+    <div class="container">
+        <!-- Left Container -->
+        <div class="left-container">
+            <!-- <h2>Student Details</h2>
+            <p><strong>Name:</strong> {{ student.name }}</p>
+            <p><strong>Roll Number:</strong> {{ student.rollno }}</p>
+            <p><strong>Class:</strong> {{ student.std_class }}</p>
+            <p><strong>Phone Number:</strong> {{ student.student_phno }}</p>
+            <p><strong>Parent's Phone Number:</strong> {{ student.parents_phno }}</p>
+            <p><strong>Bus Route:</strong> {{ student.busroute }}</p> -->
+            <h2>Student Updates</h2>
+            <h2>Message From School Bus Security System:</h2>
+        </div>
+
+        <!-- Right Container -->
+        <div class="right-container">
+            <h2>Register a New Student</h2>
+            <form action="{% url 'register_student' %}" method="post">
+                {% csrf_token %}
+             <label for=""> Register a Student Face:</label>
+             <label for="">Enter Student rollno to register:</label>
+             <input type="text" name="rollno_pic" id="rollno_pic" required >
+                <button type="submit">Register Student</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

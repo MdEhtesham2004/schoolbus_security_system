@@ -1,0 +1,25 @@
+when compared same images 
+
+True
+{'verified': True, 'distance': 0.08942023872297777, 
+'threshold': 0.4, 'model': 'Facenet', 
+'detector_backend': 'opencv', 
+'similarity_metric': 'cosine', 
+'facial_areas': {'img1': {'x': 0, 'y': 4, 'w': 117, 'h': 117, 
+'left_eye': None, 'right_eye': None}, 
+'img2': {'x': 3, 'y': 4, 'w': 119, 'h': 119, 'left_eye': None, 'right_eye': None}}, 
+'time': 10.66}
+
+
+When compared two different images: 
+
+False
+{'verified': False, 'distance': 0.5777516333457378, 
+'threshold': 0.4, 
+'model': 'Facenet', 
+'detector_backend': 'opencv', 
+'similarity_metric': 'cosine', 
+'facial_areas': {'img1': {'x': 0, 'y': 1, 'w': 116, 'h': 116, 
+'left_eye': None, 'right_eye': None}, 
+'img2': {'x': 3, 'y': 4, 'w': 119, 'h': 119, 'left_eye': None, 'right_eye': None}}, 
+'time': 8.35}

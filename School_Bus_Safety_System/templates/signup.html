@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeBusTrack - Signup</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <style>
+        body {
+            background-color: #1a202c;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .signup-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .signup-box {
+            background-color: #2d3748;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+        .signup-box h2 {
+            margin-bottom: 20px;
+        }
+        .signup-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        .signup-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4299e1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-box">
+            <h2>Signup</h2>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <input type="text" id="fullname" name="fullname" placeholder="Full Name" required>
+                <input type="text" id="rollno" name="rollno" placeholder="Rollno" required>
+                <input type="text" id="std_class" name="std_class" placeholder="class" required>
+                <input type="text" id="student_phno" name="student_phno" placeholder="Student Phone Number" >
+                <input type="text" id="parents_phno" name="parents_phno" placeholder="Parents Phone Number" required>
+                <input type="text" id="busroute" name="busroute" placeholder="busroute" required>
+                <input type="text" id="sign_username" name="sign_username" placeholder="Username" required>
+                <input type="password" id="sign_password" name="sign_password" placeholder="Password" required>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+                <button type="submit">Signup</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000 });
+    </script>
+</body>
+</html>
+# name rollno class student phno parents phno busroute 

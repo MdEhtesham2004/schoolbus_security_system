@@ -1,0 +1,8 @@
+deepface
+tensorflow==2.12.0
+keras==2.12.0
+opencv-python
+django 
+folium
+phonenumbers 
+opencage

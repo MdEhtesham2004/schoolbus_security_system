@@ -1,0 +1,193 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeBusTrack</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <style>
+        body {
+            background-color: #1a202c;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2d3748;
+            padding: 15px 30px;
+            border-radius: 10px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4299e1;
+        }
+        .logo span {
+            color: white;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        .login-btn {
+            background-color: #4299e1;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+        .hero {
+            margin-top: 50px;
+        }
+        .hero h2 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        .hero p {
+            color: #a0aec0;
+        }
+        .hero-img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px #4299e1;
+            margin-top: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            border: none;
+        }
+        .primary-btn {
+            background-color: #4299e1;
+            color: white;
+        }
+        .features {
+            margin-top: 50px;
+            padding: 40px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .feature-box {
+            background-color: #2d3748;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .feature-box i {
+            font-size: 24px;
+            color: #4299e1;
+        }
+        .cta {
+            background-color: #2b6cb0;
+            padding: 40px;
+            margin-top: 50px;
+        }
+        .secondary-btn {
+            background-color: white;
+            color: #2b6cb0;
+        }
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+            color: #a0aec0;
+        }
+        .footer-links a {
+            margin: 0 10px;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- <nav class="navbar" data-aos="fade-down">
+            <h1 class="logo">SAFE <span>BUS</span> TRACK</h1>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Features</a>
+                <a href="#">Help</a>
+                <a href="#" class="login-btn">Login</a>
+            </div>
+        </nav> -->
+        <section class="hero" data-aos="fade-up">
+            <h2>SAFE <span>BUS</span> TRACK</h2>
+            <p>SCHOOL BUS SAFETY SYSTEM</p>
+            <img src="hero.webp" alt="School Bus" class="hero-img" data-aos="zoom-in">
+            <button class="btn primary-btn" data-aos="fade-up">Get Started</button>
+        </section>
+        <section class="features">
+            <h2 data-aos="fade-up">Key Features</h2>
+            <p data-aos="fade-up">A complete solution for school bus safety and student security.</p>
+            <div class="features-grid">
+                <div class="feature-box" data-aos="flip-left">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <h3>Facial Recognition</h3>
+                    <p>Identifies students when they enter and exit the bus.</p>
+                </div>
+                <div class="feature-box" data-aos="flip-right">
+                    <i class="fa-solid fa-map-marker-alt"></i>
+                    <h3>GPS Tracking</h3>
+                    <p>Monitor real-time bus location for better security.</p>
+                </div>
+                <div class="feature-box" data-aos="flip-left">
+                    <i class="fa-solid fa-bell"></i>
+                    <h3>Instant Alerts</h3>
+                    <p>Receive SMS & app notifications when students board or exit.</p>
+                </div>
+                <div class="feature-box" data-aos="flip-right">
+                    <i class="fa-solid fa-bus-alt"></i>
+                    <h3>Route Optimization</h3>
+                    <p>AI-powered smart bus route planning for efficiency.</p>
+                </div>
+            </div>
+        </section>
+        <section class="cta" data-aos="fade-up">
+            <h2>Ready to Enhance School Bus Safety?</h2>
+            <p>Join schools nationwide in providing safer transportation for students.</p>
+            <button class="btn secondary-btn">Get Started Today</button>
+        </section>
+        <!-- <footer>
+            <p class="footer-title" data-aos="fade-up">SafeBusTrack</p>
+            <div class="footer-links" data-aos="fade-up">
+                <a href="#">About</a>
+                <a href="#">Features</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy</a>
+            </div>
+            <p class="copyright" data-aos="fade-up">© 2025 SafeBusTrack. All rights reserved.</p>
+        </footer> -->
+    </div>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000 });
+    </script>
+</body>
+</html>
+{% endblock %}
