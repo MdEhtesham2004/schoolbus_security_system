@@ -1,6 +1,10 @@
 import phonenumbers
 import opencage
-phno = "+916302540625"
+import os 
+from dotenv import load_dotenv
+load_dotenv()
+
+phno = os.getenv("phno")
 
 
 from phonenumbers import geocoder
@@ -20,7 +24,7 @@ print(service_provider_name)
 
 
 from opencage.geocoder import OpenCageGeocode
-key="20344930c7444c5c9ec3db23c4b79d78"
+geo_key=os.getenv("geo_key")
 
 geocoder = OpenCageGeocode(key)
 query = str(location)

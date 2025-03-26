@@ -2,7 +2,7 @@ import cv2
 import os
 from deepface import DeepFace
 from datetime import datetime
-from . send import send_email
+from   . send import send_email
 
 now = datetime.now()
 current_time = now.strftime("%H:%M:%S")
@@ -34,84 +34,80 @@ def update_status(status):
         file.write(str(status))
 
 
-
 def capture_and_verify(stored_image_folder):
-    # Load pre-trained face detection model (Haar cascade)
     save_path = "F:/School_Bus_Safety_System/captured_student_faces"
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-    # Initialize webcam
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # Use CAP_DSHOW for better stability on Windows
+
+    if not cap.isOpened():
+        print("Error: Could not open camera.")
+        return None, None, None, False  # Exit gracefully
 
     while True:
         ret, frame = cap.read()
         if not ret:
+            print("Error: Failed to grab frame")
             continue
 
-        # Convert to grayscale for face detection
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5, minSize=(50, 50))
 
-        # Draw rectangles around detected faces
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            # cv2.putText(frame, "Face Captured!", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 0), 2)
 
         cv2.imshow("Live Face Capture", frame)
 
-        # Press 's' to capture and compare
-        if cv2.waitKey(1) & 0xFF == ord('s') and len(faces) > 0:
-            x, y, w, h = faces[0]  # Take first detected face
-            face_crop = frame[y:y+h, x:x+w]  # Crop face
-            # captured_path = f"captured_face.jpg"
-            captured_path =  f"{save_path}/captured_face.jpg"
-            cv2.imwrite(captured_path, face_crop)  # Save the cropped face
-            
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('s') and len(faces) > 0:
+            x, y, w, h = faces[0]  
+            face_crop = frame[y:y+h, x:x+w]
+            captured_path = f"{save_path}/captured_face.jpg"
+            cv2.imwrite(captured_path, face_crop)  
+
             match_found = False
-            # Compare with stored images
+            current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
             for filename in os.listdir(stored_image_folder):
                 stored_image_path = os.path.join(stored_image_folder, filename)
 
                 try:
                     result = DeepFace.verify(img1_path=captured_path, img2_path=stored_image_path)
                     if result["verified"]:
-                        # global entry_status
-                        # entry_status = 1 # Student is  inside the bus now
-                        print(f"Match Found: {filename}")
-                        print("Varified!!")
-                        varified = True
-                        print("Student Entry Time: ", current_datetime)
-
-                        status = read_status()
-                        print("Current Status: ", status)
-                        # print(type(status))
-                        if status == '1':
-                            update_status(0)
-                            print("Student Status: Inside")
-                            student_status = "Inside"
-                            send_email(message=f"Your child  is {student_status}  the bus at {current_datetime}")
-                        else:
-                            print("Student Status: Outside")
-                            update_status(1)
-                            student_status = "Outside"
-                            send_email(message=f"Your child  is {student_status}  the bus at {current_datetime}")
-                        
                         match_found = True
+                        varified = True
+                        student_status = "Inside" if read_status() == '1' else "Outside"
+                        
+                        # Toggle student status
+                        update_status(0 if student_status == "Inside" else 1)
+
+                        # Send email notification
+                        send_email(message=f"Your child is {student_status} the bus at {current_datetime}")
+
+                        print(f"Match Found: {filename}")
+                        print("Verified!")
+                        print("Student Entry Time: ", current_datetime)
+                        print("Student Status: ", student_status)
+
                         cap.release()
                         cv2.destroyAllWindows()
-                        return status, current_datetime, student_status, varified  # Stop when a match is found
+                        return "Match Found", current_datetime, student_status, varified  
                 except:
                     continue
-            
+
             if not match_found:
-                print("No Match Found")
-                break
+                print("No Match Found!")
+                cap.release()
+                cv2.destroyAllWindows()
+                return "No Match!", "No Match Found", "Unknown Person", False  
+
+        elif key == ord('q'):  # Press 'q' to exit the loop
+            print("Exiting...")
+            break
 
     cap.release()
     cv2.destroyAllWindows()
-
-    return status, current_datetime, student_status, varified
-
+    return None, None, None, False  
 # Folder where stored images exist
 # stored_folder = "F:/School_Bus_Safety_System/student_faces/"
 # capture_and_verify(stored_folder)
@@ -121,3 +117,8 @@ def start_capturing():
     status, current_datetime, student_status, varified=capture_and_verify(stored_folder)
     
     return status, current_datetime, student_status, varified
+
+
+# status, current_datetime, student_status, varified = start_capturing()
+
+# print(status, current_datetime, student_status, varified )  

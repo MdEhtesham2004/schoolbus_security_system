@@ -32,6 +32,7 @@ urlpatterns = [
     path('parents_view',views.show_parents_view,name='parents_view'),
     path('logout',views.logout, name='logout'),
     path('mylocation/', views.mylocation_view, name='mylocation'),
+    path('admin_login', views.admin_login, name='admin_login'),
 
     #
 ]

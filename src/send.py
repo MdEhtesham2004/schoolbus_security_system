@@ -2,12 +2,16 @@
 
 #sending email 
 import smtplib
+import os 
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # Email Configuration
 SMTP_SERVER = "smtp.gmail.com"  # Gmail's SMTP server
 SMTP_PORT = 587  # TLS Port
-SENDER_EMAIL = "ehteshammohammed612@gmail.com"
-SENDER_PASSWORD = "kfmtconxcvlnvqck"
+SENDER_EMAIL = os.getenv("SENDER_EMAIL")
+SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")
 RECEIVER_EMAIL = "mdkabir3350@gmail.com"
 SUBJECT = "Student Update"
 

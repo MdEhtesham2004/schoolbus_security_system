@@ -1,20 +1,24 @@
 import sys
 import os 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login,logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.contrib import messages
-from backend.models import Student,TravelStatus
+from backend.models import Student
+from src.sms import send_sms
+from dotenv import load_dotenv
+load_dotenv()
 
 # sys.path.append("F:/School_Bus_Safety_System")
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
 from src.capture_live import start_capturing
 from src.capture_image import capture_image
+admin_phno = os.getenv("ADMIN_PHNO")
 
+STD_ID = None
 
 def take_input(flag):
     # flag = input("R to register new student, C to capture and compare and login:").lower()
@@ -33,8 +37,17 @@ def take_attendence(request):
     status, current_datetime, student_status, varified=start_capturing()
     student_id = request.session.get('student_id')  # Assuming student_id is stored in the session during login
     try:
-        # Fetch the student object using the roll number
         student = Student.objects.get(rollno=student_id)
+        parents_no = f"+91{student.parent_contact}"
+        print("parents contact ::", student.parent_contact)
+        print(parents_no)
+        print(type(parents_no))
+
+        if varified:
+            send_sms(phone_number=parents_no,message=f"Your child is {student_status} the bus at {current_datetime}")
+        else:
+            send_sms(phone_number=admin_phno,message=f"Unknown Person Detected in the bus at {current_datetime}")
+        # Fetch the student object using the roll number
 
         # # Create a new TravelStatus record
         # travel_status = TravelStatus.objects.create(
@@ -71,7 +84,24 @@ def register_student(request):
     return HttpResponse("Invalid request")
 
 def show_admin_previlages(request,status=None):
-    return render(request, 'admin.html')
+    return render(request, 'admin_authentication.html')
+
+
+def admin_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username_admin_login')
+        password = request.POST.get('password_login_admin')
+
+        # Check if the admin credentials are correct
+        if username == os.getenv("ADMIN_USERNAME") and password == os.getenv("ADMIN_PASSWORD"):  # Replace with your admin credentials
+            # Set the session variable to indicate the admin is logged in
+            messages.success(request, "Admin login successful!")
+            return render(request,'admin.html')  # Replace with the name of your admin privileges URL
+        else:
+            return HttpResponse("Invalid admin credentials.")
+
+    return render(request, 'admin_authentication.html')
+
 
 STATUS = None
 CURRENT_DATETIME = None
@@ -134,6 +164,8 @@ def login(request):
             if student.password == password:  # Replace with hashed password check if applicable
                 # Store the student in the session
                 request.session['student_id'] = student.rollno
+                global STD_ID
+                STD_ID = student.rollno
                 print(student.rollno)
                 messages.success(request, "Login successful!")
                 return redirect("parents_view")
