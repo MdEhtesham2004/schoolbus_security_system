@@ -1,1 +1,1 @@
-web: gunicorn School_Bus_Safety_System.wsgi:application
+web: gunicorn --chdir School_Bus_Safety_System School_Bus_Safety_System.wsgi:application
