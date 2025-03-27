@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8ja#-3-7go*(n=@phof#xq-kt&!r8jc4wsjvlsqzb$pj2cpwb%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['schoolbus_security_system.onrender.com']
+ALLOWED_HOSTS = ['schoolbus-security-system.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -132,3 +132,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
