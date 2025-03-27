@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-8ja#-3-7go*(n=@phof#xq-kt&!r8jc4wsjvlsqzb$pj2cpwb%
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['schoolbus-security-system.onrender.com', 'localhost', '127.0.0.1']
-
+ALLOWED_HOSTS = ['schoolbus-security-system-1.onrender.com', '127.0.0.1', 'localhost']
+    
 
 # Application definition
 

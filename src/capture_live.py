@@ -1,6 +1,7 @@
 import cv2
 import os
 from deepface import DeepFace
+DeepFace.build_model("FaceNet")
 from datetime import datetime
 from   . send import send_email
 
